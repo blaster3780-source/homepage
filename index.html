@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>엠아이케이엔지니어링 | MIK Engineering</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Variables ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:        #1a3557;
+      --navy-mid:    #254b7a;
+      --navy-light:  #2e6196;
+      --red:         #c41e1e;
+      --red-hover:   #a41818;
+      --white:       #ffffff;
+      --gray-50:     #f8f9fb;
+      --gray-100:    #f0f2f5;
+      --gray-300:    #d1d5db;
+      --gray-500:    #6b7280;
+      --gray-700:    #374151;
+      --gray-900:    #111827;
+      --section-pad: clamp(64px, 8vw, 100px) 0;
+      --radius:      10px;
+      --shadow-sm:   0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:   0 6px 24px rgba(0,0,0,.12);
+      --shadow-lg:   0 16px 48px rgba(0,0,0,.18);
+      --transition:  0.3s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+      color: var(--gray-900);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── Utilities ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px); }
+    .section-label {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    .section-title span { color: var(--red); }
+    .section-desc {
+      font-size: 16px;
+      color: var(--gray-500);
+      line-height: 1.8;
+      max-width: 560px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+    .btn-primary { background: var(--red); color: var(--white); }
+    .btn-primary:hover { background: var(--red-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,30,30,.35); }
+    .btn-outline { background: transparent; color: var(--white); border-color: rgba(255,255,255,.6); }
+    .btn-outline:hover { background: rgba(255,255,255,.12); border-color: var(--white); }
+    .fade-up { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Navigation ── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0;
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(26, 53, 87, 0.97);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 2px 20px rgba(0,0,0,.25);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      filter: brightness(0) invert(1);
+    }
+    .nav-logo-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      letter-spacing: .5px;
+    }
+    .nav-logo-text span {
+      font-weight: 300;
+      font-size: 13px;
+      display: block;
+      letter-spacing: 2px;
+      opacity: .8;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.82);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,.1); }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white) !important;
+      border-radius: 6px;
+      padding: 8px 18px !important;
+    }
+    .nav-cta:hover { background: var(--red-hover) !important; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: var(--transition);
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(26, 53, 87, 0.97);
+      backdrop-filter: blur(12px);
+      z-index: 999;
+      padding: 16px 0 24px;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block;
+      color: rgba(255,255,255,.85);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 28px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: var(--transition);
+    }
+    .mobile-menu a:hover { color: var(--white); background: rgba(255,255,255,.06); }
+
+    /* ── Hero ── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 50%, rgba(46,97,150,.45) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(196,30,30,.12) 0%, transparent 50%);
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 100px;
+      padding: 6px 16px;
+      color: rgba(255,255,255,.75);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: .3; }
+    }
+    .hero-title {
+      font-size: clamp(32px, 5.5vw, 64px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 24px;
+      letter-spacing: -.5px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: transparent;
+      background: linear-gradient(135deg, #4da3ff, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      color: rgba(255,255,255,.65);
+      line-height: 1.75;
+      margin-bottom: 40px;
+      max-width: 560px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,.4);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: bounce 2.5s infinite;
+    }
+    .hero-scroll svg { width: 20px; height: 20px; }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── Stats Strip ── */
+    #stats {
+      background: var(--navy);
+      border-top: 1px solid rgba(255,255,255,.08);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      padding: 40px 32px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,.08);
+      position: relative;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-num span { color: var(--red); }
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,.5);
+      font-weight: 400;
+      letter-spacing: .5px;
+    }
+
+    /* ── About ── */
+    #about { padding: var(--section-pad); background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-img-wrap {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .about-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .about-img-text {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: rgba(255,255,255,.5);
+      font-size: 14px;
+    }
+    .about-img-text strong {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 48px;
+      font-weight: 800;
+      color: rgba(255,255,255,.15);
+      letter-spacing: -2px;
+    }
+    .about-badge {
+      position: absolute;
+      bottom: -16px; right: 24px;
+      background: var(--red);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(196,30,30,.4);
+      white-space: nowrap;
+    }
+    .about-divider {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      margin-bottom: 24px;
+      border-radius: 2px;
+    }
+    .about-values {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .value-card {
+      background: var(--gray-50);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      border: 1px solid var(--gray-100);
+      transition: var(--transition);
+    }
+    .value-card:hover { border-color: var(--navy-light); transform: translateY(-3px); box-shadow: var(--shadow-sm); }
+    .value-icon {
+      width: 40px; height: 40px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .value-icon svg { width: 20px; height: 20px; stroke: white; fill: none; }
+    .value-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+    .value-desc { font-size: 12px; color: var(--gray-500); line-height: 1.6; }
+
+    /* ── Business Scope ── */
+    #scope { padding: var(--section-pad); background: var(--gray-50); }
+    .scope-header { text-align: center; margin-bottom: 56px; }
+    .scope-header .section-desc { margin: 0 auto; }
+    .scope-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .scope-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 36px 24px;
+      text-align: center;
+      border: 1px solid var(--gray-100);
+      transition: var(--transition);
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .scope-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--navy);
+      transform: scaleX(0);
+      transition: var(--transition);
+    }
+    .scope-card:hover { box-shadow: var(--shadow-md); transform: translateY(-6px); border-color: transparent; }
+    .scope-card:hover::after { transform: scaleX(1); }
+    .scope-num {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .scope-icon-wrap {
+      width: 72px; height: 72px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      transition: var(--transition);
+    }
+    .scope-card:hover .scope-icon-wrap { transform: rotate(-5deg) scale(1.08); }
+    .scope-icon-wrap svg { width: 32px; height: 32px; stroke: white; fill: none; }
+    .scope-card-title { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .scope-card-en { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--gray-500); letter-spacing: 1.5px; margin-bottom: 16px; }
+    .scope-card-desc { font-size: 13px; color: var(--gray-500); line-height: 1.7; }
+
+    /* ── Solutions ── */
+    #solutions { padding: var(--section-pad); background: var(--white); }
+    .solutions-header { margin-bottom: 48px; }
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 32px;
+    }
+    .tab-btn {
+      padding: 10px 22px;
+      border-radius: 100px;
+      border: 2px solid var(--gray-300);
+      background: transparent;
+      color: var(--gray-500);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+    .tab-btn:hover { border-color: var(--navy); color: var(--navy); }
+    .tab-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .solutions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .sol-card {
+      background: var(--gray-50);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--gray-100);
+      transition: var(--transition);
+    }
+    .sol-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+    .sol-card-img {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sol-card-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+    .sol-card-img-label {
+      position: relative;
+      z-index: 1;
+      color: rgba(255,255,255,.35);
+      font-family: 'Inter', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .sol-card-body { padding: 20px; }
+    .sol-client {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+    }
+    .sol-title { font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .sol-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+    .sol-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: var(--gray-100);
+      color: var(--gray-500);
+      font-weight: 500;
+    }
+
+    /* ── Partners ── */
+    #partners { padding: var(--section-pad); background: var(--gray-50); }
+    .partners-header { text-align: center; margin-bottom: 56px; }
+    .partners-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .partner-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 40px 32px;
+      border: 1px solid var(--gray-100);
+      text-align: center;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .partner-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy), var(--navy-light));
+    }
+    .partner-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); }
+    .partner-logo-area {
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .partner-logo-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -1px;
+    }
+    .partner-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--navy), var(--navy-light));
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 100px;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .partner-desc { font-size: 14px; color: var(--gray-500); line-height: 1.7; }
+    .partner-products {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .partner-product {
+      font-size: 12px;
+      padding: 4px 12px;
+      border: 1px solid var(--gray-300);
+      border-radius: 100px;
+      color: var(--gray-700);
+    }
+
+    /* ── Clients ── */
+    #clients { padding: 60px 0; background: var(--white); overflow: hidden; }
+    .clients-label { text-align: center; font-size: 13px; font-weight: 600; color: var(--gray-500); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 36px; }
+    .clients-track-wrap { overflow: hidden; position: relative; }
+    .clients-track-wrap::before,
+    .clients-track-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 120px;
+      z-index: 2;
+    }
+    .clients-track-wrap::before { left: 0; background: linear-gradient(to right, white, transparent); }
+    .clients-track-wrap::after  { right: 0; background: linear-gradient(to left, white, transparent); }
+    .clients-track {
+      display: flex;
+      gap: 48px;
+      animation: marquee 22s linear infinite;
+      width: max-content;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .client-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      height: 52px;
+    }
+    .client-name {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gray-300);
+      letter-spacing: -.3px;
+      white-space: nowrap;
+      transition: color .3s;
+    }
+    .client-name:hover { color: var(--navy); }
+
+    /* ── Timeline ── */
+    #history { padding: var(--section-pad); background: var(--gray-50); }
+    .history-header { text-align: center; margin-bottom: 64px; }
+    .timeline { position: relative; max-width: 900px; margin: 0 auto; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--navy), var(--navy-light), var(--gray-300));
+      transform: translateX(-50%);
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .tl-item:nth-child(odd) .tl-content { grid-column: 1; text-align: right; }
+    .tl-item:nth-child(odd) .tl-year-wrap { grid-column: 2; }
+    .tl-item:nth-child(even) .tl-year-wrap { grid-column: 1; }
+    .tl-item:nth-child(even) .tl-content { grid-column: 2; grid-row: 1; }
+    .tl-dot {
+      position: absolute;
+      left: 50%;
+      top: 14px;
+      transform: translateX(-50%);
+      width: 14px; height: 14px;
+      background: var(--navy);
+      border-radius: 50%;
+      border: 3px solid var(--white);
+      box-shadow: 0 0 0 3px var(--navy);
+      z-index: 1;
+    }
+    .tl-year {
+      font-family: 'Inter', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .tl-content { padding-top: 4px; }
+    .tl-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-family: 'Inter', sans-serif;
+    }
+    .tl-items-list { list-style: none; }
+    .tl-items-list li {
+      font-size: 14px;
+      color: var(--gray-700);
+      line-height: 1.7;
+      padding: 3px 0;
+      border-bottom: 1px dashed var(--gray-100);
+    }
+    .tl-items-list li:last-child { border-bottom: none; }
+
+    /* ── Contact ── */
+    #contact { padding: var(--section-pad); background: var(--navy); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .contact-info .section-title { color: var(--white); }
+    .contact-info .section-desc { color: rgba(255,255,255,.55); }
+    .contact-items { margin-top: 40px; display: flex; flex-direction: column; gap: 24px; }
+    .contact-item { display: flex; gap: 16px; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(255,255,255,.08);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .contact-icon svg { width: 20px; height: 20px; stroke: rgba(255,255,255,.7); fill: none; }
+    .contact-item-title { font-size: 12px; color: rgba(255,255,255,.4); margin-bottom: 4px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+    .contact-item-val { font-size: 15px; color: var(--white); font-weight: 500; line-height: 1.6; }
+    .contact-form {
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px;
+      padding: 36px;
+    }
+    .form-title { font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: rgba(255,255,255,.6); margin-bottom: 8px; letter-spacing: .5px; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 8px;
+      color: var(--white);
+      font-size: 14px;
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color .25s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,.25); }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.1); }
+    .form-group select { cursor: pointer; }
+    .form-group select option { background: var(--navy); color: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Noto Sans KR', sans-serif;
+      transition: var(--transition);
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--red-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,30,30,.4); }
+
+    /* ── Footer ── */
+    footer {
+      background: #0f1e2f;
+      padding: 40px 0;
+      border-top: 1px solid rgba(255,255,255,.06);
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .footer-logo { font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 800; color: var(--white); }
+    .footer-logo span { color: var(--red); }
+    .footer-info { font-size: 13px; color: rgba(255,255,255,.35); line-height: 1.8; }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,.25); }
+    .footer-partners { display: flex; gap: 16px; align-items: center; }
+    .footer-partner-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,.4);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .scope-grid { grid-template-columns: repeat(2, 1fr); }
+      .solutions-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .scope-grid { grid-template-columns: 1fr 1fr; }
+      .partners-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .timeline::before { left: 20px; }
+      .tl-item { grid-template-columns: 1fr; padding-left: 52px; gap: 8px; }
+      .tl-item:nth-child(odd) .tl-content { grid-column: 1; text-align: left; }
+      .tl-item:nth-child(odd) .tl-year-wrap { grid-column: 1; }
+      .tl-item:nth-child(even) .tl-content { grid-column: 1; grid-row: auto; }
+      .tl-dot { left: 20px; }
+      .about-values { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .solutions-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .scope-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <img src="../회사로고/회사로고.jpg" alt="MIK Logo" onerror="this.style.display='none'" />
+        <div class="nav-logo-text">
+          MIK
+          <span>Engineering</span>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">회사소개</a></li>
+        <li><a href="#scope">사업영역</a></li>
+        <li><a href="#solutions">솔루션</a></li>
+        <li><a href="#partners">파트너</a></li>
+        <li><a href="#history">연혁</a></li>
+        <li><a href="#contact" class="nav-cta">문의하기</a></li>
+      </ul>
+      <div class="hamburger" id="hamburger" aria-label="메뉴 열기">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about"    onclick="closeMobile()">회사소개</a>
+  <a href="#scope"    onclick="closeMobile()">사업영역</a>
+  <a href="#solutions" onclick="closeMobile()">솔루션</a>
+  <a href="#partners" onclick="closeMobile()">파트너</a>
+  <a href="#history"  onclick="closeMobile()">연혁</a>
+  <a href="#contact"  onclick="closeMobile()">문의하기</a>
+</div>
+
+<!-- ── Hero ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        SINCE 2014 · MOBILITY INDUSTRY KOREA
+      </div>
+      <h1 class="hero-title">
+        자동화, 설계에서<br />설치까지 <em>턴키</em>로
+      </h1>
+      <p class="hero-sub">
+        2차전지 · 스마트팩토리 자동화 전문기업 엠아이케이엔지니어링.<br />
+        기구설계부터 검증·제작·설치까지 토탈 솔루션을 제공합니다.
+      </p>
+      <div class="hero-btns">
+        <a href="#solutions" class="btn btn-primary">솔루션 보기 →</a>
+        <a href="#contact"   class="btn btn-outline">문의하기</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    scroll
+  </div>
+</section>
+
+<!-- ── Stats ── -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up">
+        <div class="stat-num"><span id="cnt-year">0</span>년</div>
+        <div class="stat-label">창립연도 (법인전환)</div>
+      </div>
+      <div class="stat-item fade-up" style="transition-delay:.1s">
+        <div class="stat-num"><span id="cnt-biz">0</span>개</div>
+        <div class="stat-label">전문 사업 분야</div>
+      </div>
+      <div class="stat-item fade-up" style="transition-delay:.2s">
+        <div class="stat-num"><span id="cnt-proj">0</span><span>+</span></div>
+        <div class="stat-label">납품 프로젝트</div>
+      </div>
+      <div class="stat-item fade-up" style="transition-delay:.3s">
+        <div class="stat-num"><span id="cnt-client">0</span><span>+</span></div>
+        <div class="stat-label">주요 납품처</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── About ── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="fade-up">
+        <div class="about-img-placeholder">
+          <div class="about-img-text">
+            <strong>MIK</strong>
+            본사 · 1공장 · 2공장<br/>경기도 화성시 향남읍
+          </div>
+        </div>
+        <div class="about-badge">SINCE 2014 · 화성시 향남읍</div>
+      </div>
+      <div class="fade-up" style="transition-delay:.15s">
+        <span class="section-label">About Us</span>
+        <div class="about-divider"></div>
+        <h2 class="section-title">고객의 물류·자동화<br />최고의 파트너</h2>
+        <p class="section-desc">
+          MIK는 <strong>Mobility Industry Korea</strong>의 약자입니다.<br />
+          2014년 설립 이래 디스플레이, 2차전지 등 산업분야에서
+          자동화 장비 및 물류 시스템 <strong>턴키 공급</strong>을 핵심 사업으로 운영하고 있습니다.<br /><br />
+          협동로봇(UR), AMR(유진로봇) 등 최신 솔루션으로
+          고객의 제조 및 물류 환경을 최적화합니다.
+        </p>
+        <div class="about-values">
+          <div class="value-card">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            </div>
+            <div class="value-title">Customer</div>
+            <div class="value-desc">고객의 입장에서 생각하는 회사</div>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="value-title">Safety</div>
+            <div class="value-desc">안전을 최우선으로 운영하는 회사</div>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <div class="value-title">Development</div>
+            <div class="value-desc">직원의 행복 속에서 발전하는 회사</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Business Scope ── -->
+<section id="scope">
+  <div class="container">
+    <div class="scope-header fade-up">
+      <span class="section-label">Business Scope</span>
+      <h2 class="section-title">설계부터 설치까지,<br /><span>전 공정 턴키 솔루션</span></h2>
+      <p class="section-desc">기구설계·검증·제작·설치의 전 과정을 자체 역량으로 수행합니다.</p>
+    </div>
+    <div class="scope-grid">
+      <div class="scope-card fade-up">
+        <div class="scope-num">01</div>
+        <div class="scope-icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        </div>
+        <div class="scope-card-title">기구설계</div>
+        <div class="scope-card-en">MECHANICAL DESIGN</div>
+        <div class="scope-card-desc">System Layout<br />Machine Concept</div>
+      </div>
+      <div class="scope-card fade-up" style="transition-delay:.1s">
+        <div class="scope-num">02</div>
+        <div class="scope-icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="scope-card-title">검증</div>
+        <div class="scope-card-en">VERIFICATION</div>
+        <div class="scope-card-desc">Strength Calculation<br />Structural Analysis</div>
+      </div>
+      <div class="scope-card fade-up" style="transition-delay:.2s">
+        <div class="scope-num">03</div>
+        <div class="scope-icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <div class="scope-card-title">제작</div>
+        <div class="scope-card-en">MANUFACTURING</div>
+        <div class="scope-card-desc">Production Management<br />Quality & A/S</div>
+      </div>
+      <div class="scope-card fade-up" style="transition-delay:.3s">
+        <div class="scope-num">04</div>
+        <div class="scope-icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div class="scope-card-title">설치</div>
+        <div class="scope-card-en">INSTALLATION</div>
+        <div class="scope-card-desc">Schedule Management<br />System Set-up</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Solutions ── -->
+<section id="solutions">
+  <div class="container">
+    <div class="solutions-header fade-up">
+      <span class="section-label">Solutions</span>
+      <h2 class="section-title">산업별 <span>자동화 솔루션</span></h2>
+      <p class="section-desc">다양한 산업군에서 검증된 MIK의 자동화 장비 납품 실적입니다.</p>
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="battery">2차전지</button>
+        <button class="tab-btn" data-tab="smart">스마트팩토리 · AMR</button>
+        <button class="tab-btn" data-tab="display">디스플레이</button>
+        <button class="tab-btn" data-tab="others">기타 산업</button>
+      </div>
+    </div>
+
+    <div id="tab-battery" class="tab-content active">
+      <div class="solutions-grid">
+        <div class="sol-card fade-up">
+          <div class="sol-card-img"><span class="sol-card-img-label">JR</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">mPLUS</span>
+            <div class="sol-title">Jelly Roll Stocker</div>
+            <div style="font-size:13px;color:var(--gray-500)">RGV·Conveyor·Shelf 방식 다양한 JR 보관 시스템. 컨셉-설계-조립-설치 전 과정 수행.</div>
+            <div class="sol-tags"><span class="sol-tag">RGV</span><span class="sol-tag">CST Transfer</span><span class="sol-tag">In/Out Port</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.1s">
+          <div class="sol-card-img"><span class="sol-card-img-label">TAB</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">mPLUS</span>
+            <div class="sol-title">Tab Welding & Stacking 물류</div>
+            <div style="font-size:13px;color:var(--gray-500)">Conveyor·Lift·Cleaner·Pin up&Align 구성. 2차전지 조립 공정 물류 자동화.</div>
+            <div class="sol-tags"><span class="sol-tag">Conveyor</span><span class="sol-tag">Lift</span><span class="sol-tag">Pin up</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.2s">
+          <div class="sol-card-img"><span class="sol-card-img-label">CT</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">소프트센</span>
+            <div class="sol-title">CT / X-Ray 검사기</div>
+            <div style="font-size:13px;color:var(--gray-500)">Jelly Roll 음극·양극 정렬 상태 검사 장비. P&P·Laser&Detector·NG Eject 구성.</div>
+            <div class="sol-tags"><span class="sol-tag">CT검사</span><span class="sol-tag">X-Ray</span><span class="sol-tag">NG Eject</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-smart" class="tab-content">
+      <div class="solutions-grid">
+        <div class="sol-card fade-up">
+          <div class="sol-card-img"><span class="sol-card-img-label">AMR</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">에실로코리아 / Lenz</span>
+            <div class="sol-title">AMR + Sliding Fork 주변장치</div>
+            <div style="font-size:13px;color:var(--gray-500)">유진로봇 GoCart 기반 매거진 이송 시스템. 컨셉·설계·조립·설치 전 과정.</div>
+            <div class="sol-tags"><span class="sol-tag">GoCart</span><span class="sol-tag">Sliding Fork</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.1s">
+          <div class="sol-card-img"><span class="sol-card-img-label">AMR</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">셰플러코리아</span>
+            <div class="sol-title">AMR + Trolley 이송</div>
+            <div style="font-size:13px;color:var(--gray-500)">GoCart + Trolley 조합으로 공장 내 자율 이송 자동화.</div>
+            <div class="sol-tags"><span class="sol-tag">GoCart</span><span class="sol-tag">Trolley</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.2s">
+          <div class="sol-card-img"><span class="sol-card-img-label">AGV</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">시너스텍</span>
+            <div class="sol-title">AGV — 반도체 FOUB 이송</div>
+            <div style="font-size:13px;color:var(--gray-500)">반도체 클린룸 환경에 최적화된 FOUB 이송 AGV. 조립·설치 수행.</div>
+            <div class="sol-tags"><span class="sol-tag">AGV</span><span class="sol-tag">반도체</span><span class="sol-tag">클린룸</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-display" class="tab-content">
+      <div class="solutions-grid">
+        <div class="sol-card fade-up">
+          <div class="sol-card-img"><span class="sol-card-img-label">OLED</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">AP System</span>
+            <div class="sol-title">Encap 물류 시스템</div>
+            <div style="font-size:13px;color:var(--gray-500)">Chamber·Shuttle·이재 Robot·Glass 반전기 구성. OLED 봉지 공정 물류 자동화.</div>
+            <div class="sol-tags"><span class="sol-tag">Chamber</span><span class="sol-tag">Shuttle</span><span class="sol-tag">Glass 반전기</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.1s">
+          <div class="sol-card-img"><span class="sol-card-img-label">UV</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">DIT</span>
+            <div class="sol-title">형광 UV 노광기</div>
+            <div style="font-size:13px;color:var(--gray-500)">Glass UV 노광 전용 Lift형 노광 시스템. 설계·조립 수행.</div>
+            <div class="sol-tags"><span class="sol-tag">UV 노광</span><span class="sol-tag">Lift형</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-others" class="tab-content">
+      <div class="solutions-grid">
+        <div class="sol-card fade-up">
+          <div class="sol-card-img"><span class="sol-card-img-label">WLD</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">휴비스</span>
+            <div class="sol-title">자동 레이저 용접기</div>
+            <div style="font-size:13px;color:var(--gray-500)">스마트전자 Busbar Pin 용접. Magazine·P&P·Welding Stage·Feeder 구성.</div>
+            <div class="sol-tags"><span class="sol-tag">레이저 용접</span><span class="sol-tag">P&P</span></div>
+          </div>
+        </div>
+        <div class="sol-card fade-up" style="transition-delay:.1s">
+          <div class="sol-card-img"><span class="sol-card-img-label">AUTO</span></div>
+          <div class="sol-card-body">
+            <span class="sol-client">유도로보틱스</span>
+            <div class="sol-title">트랜스미션 자동 공급/세정/건조/검사 라인</div>
+            <div style="font-size:13px;color:var(--gray-500)">Cleaner·Stocker·Conveyor·Gantry·Dryer 구성의 완전 자동화 라인.</div>
+            <div class="sol-tags"><span class="sol-tag">Cleaner</span><span class="sol-tag">Gantry</span><span class="sol-tag">Dryer</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Partners ── -->
+<section id="partners">
+  <div class="container">
+    <div class="partners-header fade-up">
+      <span class="section-label">Partnership</span>
+      <h2 class="section-title">공인 파트너십</h2>
+      <p class="section-desc" style="margin:0 auto">유진로봇 공식 대리점 및 Universal Robots 공식 SI 파트너로서 최신 로봇 솔루션을 제공합니다.</p>
+    </div>
+    <div class="partners-grid">
+      <div class="partner-card fade-up">
+        <div class="partner-logo-area">
+          <div class="partner-logo-text">YUJIN ROBOT</div>
+        </div>
+        <div class="partner-badge">공식 대리점 · AMR</div>
+        <p class="partner-desc">유진로봇 자율주행로봇(AMR) 공식 대리점으로 GoCart 전 제품군 판매 및 주변장치 설계·납품.</p>
+        <div class="partner-products">
+          <span class="partner-product">GoCart 180</span>
+          <span class="partner-product">GoCart 250</span>
+          <span class="partner-product">GoCart 500/1000</span>
+          <span class="partner-product">GoCart 200 Omni</span>
+        </div>
+      </div>
+      <div class="partner-card fade-up" style="transition-delay:.15s">
+        <div class="partner-logo-area">
+          <div class="partner-logo-text">UNIVERSAL<br/>ROBOTS</div>
+        </div>
+        <div class="partner-badge">공식 SI 파트너 · 협동로봇</div>
+        <p class="partner-desc">Universal Robots 공식 System Integrator로 협동로봇 도입·통합 자동화 시스템 구축.</p>
+        <div class="partner-products">
+          <span class="partner-product">UR3e</span>
+          <span class="partner-product">UR5e</span>
+          <span class="partner-product">UR10e</span>
+          <span class="partner-product">UR16e</span>
+          <span class="partner-product">UR20</span>
+          <span class="partner-product">UR30</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Clients ── -->
+<section id="clients">
+  <div class="container">
+    <div class="clients-label fade-up">주요 납품처 · 등록 고객사</div>
+  </div>
+  <div class="clients-track-wrap">
+    <div class="clients-track" id="clientsTrack">
+      <div class="client-item"><span class="client-name">mPLUS</span></div>
+      <div class="client-item"><span class="client-name">AP Systems</span></div>
+      <div class="client-item"><span class="client-name">YUJIN ROBOT</span></div>
+      <div class="client-item"><span class="client-name">한화테크엠</span></div>
+      <div class="client-item"><span class="client-name">SFA</span></div>
+      <div class="client-item"><span class="client-name">시너스텍</span></div>
+      <div class="client-item"><span class="client-name">갑진</span></div>
+      <div class="client-item"><span class="client-name">소프트센</span></div>
+      <div class="client-item"><span class="client-name">우신시스템</span></div>
+      <div class="client-item"><span class="client-name">휴비스</span></div>
+      <div class="client-item"><span class="client-name">DIT</span></div>
+      <div class="client-item"><span class="client-name">유도로보틱스</span></div>
+      <div class="client-item"><span class="client-name">셰플러코리아</span></div>
+      <div class="client-item"><span class="client-name">에실로코리아</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="client-item"><span class="client-name">mPLUS</span></div>
+      <div class="client-item"><span class="client-name">AP Systems</span></div>
+      <div class="client-item"><span class="client-name">YUJIN ROBOT</span></div>
+      <div class="client-item"><span class="client-name">한화테크엠</span></div>
+      <div class="client-item"><span class="client-name">SFA</span></div>
+      <div class="client-item"><span class="client-name">시너스텍</span></div>
+      <div class="client-item"><span class="client-name">갑진</span></div>
+      <div class="client-item"><span class="client-name">소프트센</span></div>
+      <div class="client-item"><span class="client-name">우신시스템</span></div>
+      <div class="client-item"><span class="client-name">휴비스</span></div>
+      <div class="client-item"><span class="client-name">DIT</span></div>
+      <div class="client-item"><span class="client-name">유도로보틱스</span></div>
+      <div class="client-item"><span class="client-name">셰플러코리아</span></div>
+      <div class="client-item"><span class="client-name">에실로코리아</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── History ── -->
+<section id="history">
+  <div class="container">
+    <div class="history-header fade-up">
+      <span class="section-label">History</span>
+      <h2 class="section-title">10년의 성장 <span>연혁</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item fade-up">
+        <div class="tl-content">
+          <span class="tl-tag">Foundation</span>
+          <ul class="tl-items-list">
+            <li>MIK Engineering 설립</li>
+            <li>자동차 / 모터 조립 라인 수행</li>
+          </ul>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2014</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-year-wrap"><div class="tl-year">2016</div></div>
+        <div class="tl-content">
+          <span class="tl-tag">법인전환</span>
+          <ul class="tl-items-list">
+            <li>제조공장 등록 (양감)</li>
+            <li>법인사업자 전환</li>
+          </ul>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-content">
+          <span class="tl-tag">2차전지 진출</span>
+          <ul class="tl-items-list">
+            <li>디스플레이 / Encap 라인</li>
+            <li>2차전지 / X-Ray 검사기</li>
+          </ul>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2017</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-year-wrap"><div class="tl-year">2018</div></div>
+        <div class="tl-content">
+          <span class="tl-tag">2차전지 확장</span>
+          <ul class="tl-items-list">
+            <li>2차전지 / Tap Welding, Stacking Conveyor 라인</li>
+            <li>2차전지 / 셀추적 장비</li>
+          </ul>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-content">
+          <span class="tl-tag">물류 자동화</span>
+          <ul class="tl-items-list">
+            <li>2차전지 / JR Buffer 장비</li>
+            <li>일반 / 용접자동화 장비</li>
+          </ul>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2019</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-year-wrap"><div class="tl-year">2020–22</div></div>
+        <div class="tl-content">
+          <span class="tl-tag">스마트팩토리</span>
+          <ul class="tl-items-list">
+            <li>2020 — JR Buffer, 디스플레이 PP Box 틸팅기</li>
+            <li>2021 — 디스플레이 형광 UV 노광기</li>
+            <li>2022 — AMR 주변장치 (스마트팩토리 진출)</li>
+          </ul>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-content">
+          <span class="tl-tag">대량 납품</span>
+          <ul class="tl-items-list">
+            <li>2차전지 / JR Buffer 24대 납품</li>
+          </ul>
+        </div>
+        <div class="tl-year-wrap"><div class="tl-year">2023</div></div>
+        <div class="tl-dot"></div>
+      </div>
+      <div class="tl-item fade-up">
+        <div class="tl-year-wrap"><div class="tl-year">2024</div></div>
+        <div class="tl-content">
+          <span class="tl-tag">검사·물류 고도화</span>
+          <ul class="tl-items-list">
+            <li>2차전지 / CT 검사기</li>
+            <li>2차전지 / Notching 물류</li>
+          </ul>
+        </div>
+        <div class="tl-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Contact ── -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <span class="section-label" style="color:rgba(255,255,255,.5)">Contact Us</span>
+        <h2 class="section-title" style="color:var(--white)">프로젝트 문의<br /><span>언제든지 연락주세요</span></h2>
+        <p class="section-desc" style="color:rgba(255,255,255,.5)">자동화 장비, AMR, 협동로봇 도입에 대해 궁금한 점이 있으시면 편하게 문의해주세요.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.45-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-title">전화</div>
+              <div class="contact-item-val">010-9228-8099</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-title">이메일</div>
+              <div class="contact-item-val">영업 : onetwo34@hanmail.net<br />설계 : smk70@hanmail.net</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-title">주소</div>
+              <div class="contact-item-val">경기도 화성시 향남읍<br />만년로 151번길 44-30 나동<br /><span style="font-size:13px;opacity:.6">향남IC → MIK : 4.4km (10분)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form fade-up" style="transition-delay:.15s">
+        <div class="form-title">프로젝트 문의</div>
+        <form id="contactForm" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>회사명</label>
+              <input type="text" placeholder="회사명을 입력하세요" required />
+            </div>
+            <div class="form-group">
+              <label>담당자 이름</label>
+              <input type="text" placeholder="이름을 입력하세요" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>연락처</label>
+              <input type="tel" placeholder="010-0000-0000" required />
+            </div>
+            <div class="form-group">
+              <label>이메일</label>
+              <input type="email" placeholder="email@company.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>문의 분야</label>
+            <select required>
+              <option value="" disabled selected>선택해주세요</option>
+              <option>2차전지 자동화</option>
+              <option>AMR · 스마트팩토리</option>
+              <option>협동로봇 (UR)</option>
+              <option>디스플레이 장비</option>
+              <option>기타 산업 자동화</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>문의 내용</label>
+            <textarea placeholder="프로젝트 내용이나 문의사항을 자유롭게 작성해주세요." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">문의 보내기 →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Footer ── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">MIK<span>.</span></div>
+        <div class="footer-info" style="margin-top:8px">
+          (주)엠아이케이엔지니어링 &nbsp;|&nbsp; 대표이사 석승호<br />
+          경기도 화성시 향남읍 만년로 151번길 44-30 나동
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="footer-partners">
+          <span class="footer-partner-badge">YUJIN ROBOT 대리점</span>
+          <span class="footer-partner-badge">UR SI 파트너</span>
+        </div>
+        <div class="footer-copy" style="margin-top:16px">© 2024 MIK Engineering. All rights reserved.</div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+
+  /* ── Mobile menu ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  /* ── Intersection Observer: fade-up ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Count-up ── */
+  function countUp(el, target, duration, suffix) {
+    const start = performance.now();
+    const update = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = (suffix === '년' ? 2014 : Math.round(ease * target)).toString();
+      if (progress < 1) requestAnimationFrame(update);
+    };
+    requestAnimationFrame(update);
+  }
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        countUp(document.getElementById('cnt-year'),  2014, 1800, '년');
+        countUp(document.getElementById('cnt-biz'),      4, 1200, '개');
+        countUp(document.getElementById('cnt-proj'),    30, 1600, '+');
+        countUp(document.getElementById('cnt-client'),  10, 1400, '+');
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  statsObserver.observe(document.getElementById('stats'));
+
+  /* ── Tabs ── */
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  /* ── Contact form ── */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '전송 완료! 빠르게 연락드리겠습니다.';
+    btn.style.background = '#16a34a';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = '문의 보내기 →';
+      btn.style.background = '';
+      btn.disabled = false;
+      e.target.reset();
+    }, 4000);
+  }
+</script>
+</body>
+</html>
