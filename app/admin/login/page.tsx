@@ -1,16 +1,19 @@
 'use client'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
 export default function LoginPage() {
-  const [pw, setPw] = useState('')
+  const pwRef = useRef<HTMLInputElement>(null)
+  const [show, setShow] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    const pw = pwRef.current?.value || ''
+    if (!pw) return
     setLoading(true)
     setError('')
     const res = await fetch('/api/admin/login', {
@@ -47,15 +50,22 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="text-white/50 text-xs font-semibold tracking-wider block mb-2">비밀번호</label>
-              <input
-                type="password"
-                value={pw}
-                onChange={e => setPw(e.target.value)}
-                placeholder="관리자 비밀번호 입력"
-                required
-                autoFocus
-                className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 transition-all"
-              />
+              <div className="relative">
+                <input
+                  ref={pwRef}
+                  type={show ? 'text' : 'password'}
+                  placeholder="관리자 비밀번호 입력"
+                  required
+                  className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 pr-12 text-white text-sm placeholder-white/30 outline-none focus:border-white/50 focus:bg-white/15 transition-all"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShow(s => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 text-xs transition-all"
+                >
+                  {show ? '숨기기' : '보기'}
+                </button>
+              </div>
             </div>
             {error && <p className="text-red-400 text-sm">{error}</p>}
             <button
