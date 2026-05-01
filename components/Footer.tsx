@@ -21,7 +21,7 @@ export default function Footer() {
             ))}
           </div>
           <div className="text-white/20 text-xs">
-            © 2024 MIK Engineering. All rights reserved.
+            © 2025 MIK Engineering. All rights reserved.
           </div>
         </div>
       </div>

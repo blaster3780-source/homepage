@@ -8,8 +8,9 @@ const values = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0" />
       </svg>
     ),
-    title: 'Customer',
-    desc: '고객의 입장에서 생각하는 회사',
+    title: '고객 중심',
+    sub: 'Customer First',
+    desc: '고객의 입장에서 생각하고 행동하는 회사',
   },
   {
     icon: (
@@ -17,8 +18,9 @@ const values = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
       </svg>
     ),
-    title: 'Safety',
-    desc: '안전을 최우선으로 운영하는 회사',
+    title: '안전 제일',
+    sub: 'Safety First',
+    desc: '안전을 최우선 가치로 운영하는 회사',
   },
   {
     icon: (
@@ -26,7 +28,8 @@ const values = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
       </svg>
     ),
-    title: 'Development',
+    title: '함께 성장',
+    sub: 'Growth Together',
     desc: '직원의 행복 속에서 발전하는 회사',
   },
 ]
@@ -81,11 +84,12 @@ export default function About() {
             <div className="grid grid-cols-3 gap-3">
               {values.map((v, i) => (
                 <FadeUp key={v.title} delay={0.1 + i * 0.08}>
-                  <div className="bg-gray-50 border border-gray-100 rounded-xl p-4 hover:border-navy/20 hover:-translate-y-1 transition-all group">
-                    <div className="w-9 h-9 bg-navy rounded-lg flex items-center justify-center mb-3 group-hover:bg-navy-mid transition-colors">
+                  <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 hover:border-navy/20 hover:bg-white hover:shadow-md hover:-translate-y-1 transition-all group">
+                    <div className="w-10 h-10 bg-navy rounded-xl flex items-center justify-center mb-4 group-hover:bg-navy-mid transition-colors">
                       {v.icon}
                     </div>
-                    <div className="font-bold text-navy text-sm mb-1">{v.title}</div>
+                    <div className="font-black text-navy text-sm mb-0.5">{v.title}</div>
+                    <div className="text-brand/60 text-[10px] font-semibold tracking-wider mb-2">{v.sub}</div>
                     <div className="text-gray-400 text-xs leading-relaxed">{v.desc}</div>
                   </div>
                 </FadeUp>

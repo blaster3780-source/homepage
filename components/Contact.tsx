@@ -96,7 +96,7 @@ export default function Contact() {
                       type="text"
                       required
                       placeholder="회사명"
-                      className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 focus:bg-white/12 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm placeholder-white/35 outline-none focus:border-white/50 focus:bg-white/15 transition-all"
                     />
                   </div>
                   <div>
@@ -105,7 +105,7 @@ export default function Contact() {
                       type="text"
                       required
                       placeholder="이름"
-                      className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 focus:bg-white/12 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm placeholder-white/35 outline-none focus:border-white/50 focus:bg-white/15 transition-all"
                     />
                   </div>
                 </div>
@@ -116,7 +116,7 @@ export default function Contact() {
                       type="tel"
                       required
                       placeholder="010-0000-0000"
-                      className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 focus:bg-white/12 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm placeholder-white/35 outline-none focus:border-white/50 focus:bg-white/15 transition-all"
                     />
                   </div>
                   <div>
@@ -124,7 +124,7 @@ export default function Contact() {
                     <input
                       type="email"
                       placeholder="email@company.com"
-                      className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 focus:bg-white/12 transition-all"
+                      className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm placeholder-white/35 outline-none focus:border-white/50 focus:bg-white/15 transition-all"
                     />
                   </div>
                 </div>
@@ -132,7 +132,7 @@ export default function Contact() {
                   <label className="text-white/50 text-xs font-semibold tracking-wider block mb-2">문의 분야</label>
                   <select
                     required
-                    className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-white/35 focus:bg-white/12 transition-all [&>option]:bg-navy cursor-pointer"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm outline-none focus:border-white/50 focus:bg-white/15 transition-all [&>option]:bg-navy cursor-pointer"
                     defaultValue=""
                   >
                     <option value="" disabled>선택해주세요</option>
@@ -145,7 +145,7 @@ export default function Contact() {
                     required
                     rows={4}
                     placeholder="프로젝트 내용이나 문의사항을 자유롭게 작성해주세요."
-                    className="w-full bg-white/8 border border-white/12 rounded-xl px-4 py-3 text-white text-sm placeholder-white/25 outline-none focus:border-white/35 focus:bg-white/12 transition-all resize-none"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white text-sm placeholder-white/35 outline-none focus:border-white/50 focus:bg-white/15 transition-all resize-none"
                   />
                 </div>
                 <button

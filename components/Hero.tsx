@@ -79,7 +79,7 @@ export default function Hero() {
           >
             <a
               href="#solutions"
-              className="inline-flex items-center gap-2 bg-brand hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-brand/40 text-[15px]"
+              className="inline-flex items-center gap-2.5 bg-brand hover:bg-red-700 text-white font-bold px-8 py-4 rounded-2xl transition-all hover:-translate-y-0.5 hover:shadow-2xl hover:shadow-brand/50 text-[15px] tracking-wide"
             >
               솔루션 보기
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -88,7 +88,7 @@ export default function Hero() {
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 border border-white/25 hover:border-white/50 hover:bg-white/8 text-white/80 hover:text-white font-semibold px-7 py-3.5 rounded-xl transition-all text-[15px]"
+              className="inline-flex items-center gap-2 border-2 border-white/30 hover:border-white/60 hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl transition-all text-[15px] tracking-wide"
             >
               문의하기
             </a>
